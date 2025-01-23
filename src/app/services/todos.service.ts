@@ -11,7 +11,6 @@ export interface ITodo {
   type: string;
   'Estimated SP': number;
   'Actual SP': number;
-  isEditMode?: boolean;
 }
 
 interface IResponse {
