@@ -8,7 +8,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
-import { HeaderComponent } from './components/header/header.component';
+import { HeaderComponent } from '@/components/header/header.component';
 
 @Component({
   selector: 'app-root',
