@@ -1,67 +1,189 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatTableModule } from '@angular/material/table';
-import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { SelectionModel } from '@angular/cdk/collections';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+
+import { TodoService, ITodo } from '@/services/todos.service';
+
+interface Todo extends ITodo {
+  isEditMode?: boolean;
+  developers?: string[];
+}
 
 @Component({
   selector: 'app-task-table',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatIconModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatTableModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    MatInputModule,
+  ],
   templateUrl: './task-table.component.html',
-  styleUrls: ['./task-table.component.css'],
+  styleUrls: ['./task-table.component.scss'],
 })
-export class TaskTableComponent {
+export class TaskTableComponent implements OnInit {
   displayedColumns: string[] = [
-    'task',
+    'select',
+    'title',
     'developer',
-    'status',
     'priority',
+    'status',
     'type',
-    'date',
-    'estimatedSP',
-    'actualSP',
-    'action',
+    'Estimated SP',
+    'Actual SP',
+    'actions',
   ];
-  dataSource = [
-    {
-      task: 'New Task',
-      developer: '',
-      status: '',
-      priority: '',
-      type: '',
-      date: '',
-      estimatedSP: '0 SP',
-      actualSP: '0 SP',
-    },
-    {
-      task: 'New task',
-      developer: '',
-      status: 'Working for review',
-      priority: 'Medium',
-      type: 'Feature Extracted',
-      date: '',
-      estimatedSP: '0 SP',
-      actualSP: '0 SP',
-    },
-    {
-      task: 'New Task',
-      developer: '',
-      status: 'In Progress',
-      priority: 'Base Effort',
-      type: 'Feature Extracted',
-      date: '',
-      estimatedSP: '',
-      actualSP: '',
-    },
-    {
-      task: 'Conventional Feature',
-      developer: '',
-      status: 'Ready to start',
-      priority: 'High',
-      type: 'Offset',
-      date: '',
-      estimatedSP: '2 SP',
-      actualSP: '15 SP',
-    },
+
+  dataSource = new MatTableDataSource<Todo>();
+  selection = new SelectionModel<Todo>(true, []);
+
+  developers = ['Alice', 'Bob', 'Charlie'];
+  priorityOptions: string[] = [
+    'Critical',
+    'High',
+    'Medium',
+    'Low',
+    'Best Effort',
   ];
+  statusOptions: string[] = [
+    'Ready to start',
+    'In Progress',
+    'Waiting for review',
+    'Pending Deploy',
+    'Done',
+    'Stuck',
+  ];
+  typeOptions: string[] = ['Feature Enhancements', 'Other', 'Bug'];
+
+  private destroy$ = new Subject<void>();
+
+  constructor(private todoService: TodoService) {}
+
+  ngOnInit() {
+    this.todoService.todos$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (todos) => {
+        this.dataSource.data = todos.map((todo) => ({
+          ...todo,
+          developers: this.splitDevelopers(todo.developer),
+        }));
+      },
+      error: (err) => {
+        console.error('Error fetching data:', err);
+      },
+    });
+
+    this.todoService.fetchTodos().subscribe();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  splitDevelopers(developers: string): string[] {
+    return developers ? developers.split(', ').map((dev) => dev.trim()) : [];
+  }
+
+  joinDevelopers(developerArray: string[]): string {
+    return developerArray.join(', ');
+  }
+
+  updateDeveloper(element: Todo, newValue: string[]) {
+    element.developers = newValue;
+    element.developer = this.joinDevelopers(newValue);
+  }
+
+  getTypeClass(status: string): string {
+    switch (status) {
+      case 'Feature Enhancements':
+        return 'feature-enhancements';
+      case 'Other':
+        return 'other';
+      case 'Bug':
+        return 'bug';
+      default:
+        return '';
+    }
+  }
+
+  getPriorityClass(status: string): string {
+    switch (status) {
+      case 'Critical':
+        return 'critical';
+      case 'High':
+        return 'high';
+      case 'Medium':
+        return 'medium';
+      case 'Low':
+        return 'low';
+      case 'Best Effort':
+        return 'best-effort';
+      default:
+        return '';
+    }
+  }
+
+  getStatusClass(status: string): string {
+    switch (status) {
+      case 'Ready to start':
+        return 'ready';
+      case 'In Progress':
+        return 'progress';
+      case 'Waiting for review':
+        return 'waiting';
+      case 'Pending Deploy':
+        return 'pending';
+      case 'Done':
+        return 'done';
+      case 'Stuck':
+        return 'stuck';
+      default:
+        return '';
+    }
+  }
+
+  splitString(str: string): string[] {
+    return str.split(' ');
+  }
+
+  getFormattedDevelopers(developers: string[]): string {
+    return developers?.join(', ') + ' ';
+  }
+
+  editRow(row: Todo) {
+    row.isEditMode = true;
+  }
+
+  saveRow(row: Todo) {
+    row.isEditMode = false;
+    console.log(row);
+    this.todoService.updateTodo(row);
+  }
+
+  isAllSelected(): boolean {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  toggleAllRows(): void {
+    this.isAllSelected()
+      ? this.selection.clear()
+      : this.dataSource.data.forEach((row) => this.selection.select(row));
+  }
+
+  toggleRowSelection(row: Todo): void {
+    this.selection.toggle(row);
+  }
 }
