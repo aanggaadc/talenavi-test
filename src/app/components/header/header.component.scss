@@ -1,0 +1,36 @@
+header {
+  padding-top: 30px;
+  padding-bottom: 10px;
+
+  nav {
+    border-bottom: 1px solid #fff;
+  }
+
+  nav ul {
+    padding: 10px 0;
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+  }
+
+  nav li {
+    padding: 10px;
+  }
+
+  nav li.active {
+    border-bottom: 2px solid blue;
+
+  }
+
+  nav a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+}
