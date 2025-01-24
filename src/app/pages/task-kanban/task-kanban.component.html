@@ -1,1 +1,69 @@
-On progress
+<div class="kanban-container">
+  <div class="card-container">
+    <div class="card-header ready">
+      Ready to start {{ready.length}}
+    </div>
+
+    <div cdkDropList id="todoList" #todoList="cdkDropList" [cdkDropListData]="ready"
+      [cdkDropListConnectedTo]="[inProgressList, waitingList, doneList]" class="card-body"
+      (cdkDropListDropped)="drop($event)">
+      @for (item of ready; track item) {
+      <div cdkDrag>
+        <kanban-task-card [title]="item.title" [priority]="item.priority" [SP]="item['Estimated SP']" [type]="item.type"
+          [developer]="item.developer"></kanban-task-card>
+      </div>
+      }
+    </div>
+  </div>
+
+  <div class="card-container">
+    <div class="card-header progress">
+      In Progress {{inProgress.length}}
+    </div>
+
+    <div cdkDropList id="inProgressList" #inProgressList="cdkDropList" [cdkDropListData]="inProgress"
+      [cdkDropListConnectedTo]="[todoList, waitingList, doneList]" class="card-body"
+      (cdkDropListDropped)="drop($event)">
+      @for (item of inProgress; track item) {
+      <div cdkDrag>
+        <kanban-task-card [title]="item.title" [priority]="item.priority" [SP]="item['Estimated SP']" [type]="item.type"
+          [developer]="item.developer"></kanban-task-card>
+      </div>
+      }
+    </div>
+  </div>
+
+  <div class="card-container">
+    <div class="card-header waiting">
+      Waiting for review {{waiting.length}}
+    </div>
+
+    <div cdkDropList id="waitingList" #waitingList="cdkDropList" [cdkDropListData]="waiting"
+      [cdkDropListConnectedTo]="[todoList, inProgressList, doneList]" class="card-body"
+      (cdkDropListDropped)="drop($event)">
+      @for (item of waiting; track item) {
+      <div cdkDrag>
+        <kanban-task-card [title]="item.title" [priority]="item.priority" [SP]="item['Estimated SP']" [type]="item.type"
+          [developer]="item.developer"></kanban-task-card>
+      </div>
+      }
+    </div>
+  </div>
+
+  <div class="card-container">
+    <div class="card-header done">
+      Done {{done.length}}
+    </div>
+
+    <div cdkDropList id="doneList" #doneList="cdkDropList" [cdkDropListData]="done"
+      [cdkDropListConnectedTo]="[todoList, inProgressList, waitingList]" class="card-body"
+      (cdkDropListDropped)="drop($event)">
+      @for (item of done; track item) {
+      <div cdkDrag>
+        <kanban-task-card [title]="item.title" [priority]="item.priority" [SP]="item['Estimated SP']" [type]="item.type"
+          [developer]="item.developer"></kanban-task-card>
+      </div>
+      }
+    </div>
+  </div>
+</div>

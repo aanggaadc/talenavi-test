@@ -1,0 +1,36 @@
+.task-card {
+  background: #202235;
+  padding: 20px 10px;
+  color: #fff;
+  cursor: grab;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+.task-card-content {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.task-card-content-item {
+  font-size: 12px;
+  padding: 5px;
+  background: #3e4047;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.sp {
+  padding: 3px;
+  border-radius: 2px;
+  background-color: #202235;
+}
+
+.task-card-footer {
+  margin-top: 15px;
+  font-weight: bold;
+}

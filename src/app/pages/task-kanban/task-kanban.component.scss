@@ -1,0 +1,81 @@
+.kanban-container {
+  padding-top: 20px;
+  border-top: 1px solid #fff;
+}
+
+.card-container {
+  width: 400px;
+  max-width: 100%;
+  margin: 0 25px 25px 0;
+  display: inline-block;
+  vertical-align: top;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.card-header {
+  width: 100%;
+  padding: 20px;
+  color: #fff;
+  font-weight: bold;
+
+  &.ready {
+    background-color: #3498db;
+    color: #fff;
+  }
+
+  &.ready {
+    background-color: #3498db !important;
+    color: #fff;
+  }
+
+  &.progress {
+    background-color: #f1c40f !important;
+    color: #202235;
+  }
+
+  &.waiting {
+    background-color: #30bdc7 !important;
+    color: #fff;
+  }
+
+  &.done {
+    background-color: #2ecc71 !important;
+    color: #fff;
+  }
+}
+
+.card-body {
+  padding: 20px;
+  min-height: 60px;
+  background-color: #3e4047;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-box:last-child {
+  border: none;
+}
+
+.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
