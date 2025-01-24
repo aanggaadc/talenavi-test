@@ -33,3 +33,32 @@ header {
     gap: 5px;
   }
 }
+
+.action-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-new-task {
+  border-radius: 5px;
+  background-color: #0073E6 !important;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-input {
+  width: 300px;
+}
+
+::ng-deep .mat-mdc-menu-panel {
+  background-color: #202235 !important;
+  color: #FFF;
+  padding: 0 10px;
+  border-radius: 10px;
+}

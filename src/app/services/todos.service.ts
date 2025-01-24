@@ -50,7 +50,7 @@ export class TodoService {
       title: 'New Task',
       developer: '',
       priority: 'Low',
-      status: 'Pending',
+      status: 'Ready to start',
       type: 'Other',
       'Estimated SP': 0,
       'Actual SP': 0,

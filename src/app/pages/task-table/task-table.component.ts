@@ -9,8 +9,6 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { MatMenu } from '@angular/material/menu';
-import { MatMenuTrigger } from '@angular/material/menu';
 
 import { TodoService, ITodo } from '@/services/todos.service';
 
@@ -31,13 +29,13 @@ interface Todo extends ITodo {
     MatSelectModule,
     MatInputModule,
     MatIconModule,
-    MatMenu,
-    MatMenuTrigger,
   ],
   templateUrl: './task-table.component.html',
   styleUrls: ['./task-table.component.scss'],
 })
 export class TaskTableComponent implements OnInit {
+  developers = ['Alice', 'Bob', 'Charlie'];
+
   displayedColumns: string[] = [
     'select',
     'title',
@@ -52,10 +50,6 @@ export class TaskTableComponent implements OnInit {
 
   dataSource = new MatTableDataSource<Todo>();
   selection = new SelectionModel<Todo>(true, []);
-
-  developers = ['Alice', 'Bob', 'Charlie'];
-  selectedDevelopers: { [key: string]: boolean } = {};
-  isAllDevelopersSelected = true;
 
   priorityOptions: string[] = [
     'Critical',
@@ -72,19 +66,8 @@ export class TaskTableComponent implements OnInit {
     'Done',
     'Stuck',
   ];
+
   typeOptions: string[] = ['Feature Enhancements', 'Other', 'Bug'];
-
-  taskName: string = '';
-
-  sortOptions: { [key: string]: boolean } = {
-    title: false,
-    priority: false,
-  };
-
-  sortOrders: { [key: string]: 'asc' | 'desc' } = {
-    title: 'asc',
-    priority: 'asc',
-  };
 
   totalEstimatedSP: number = 0;
   totalActualSP: number = 0;
@@ -199,50 +182,6 @@ export class TaskTableComponent implements OnInit {
   saveTodo(row: Todo): void {
     row.isEditMode = false;
     this.todoService.updateTodo(row);
-  }
-
-  searchTaskName(): void {
-    this.todoService.searchByTitle(this.taskName);
-  }
-
-  updateSort(column: keyof ITodo, isChecked: boolean): void {
-    this.sortOptions[column] = isChecked;
-
-    if (isChecked) {
-      this.sortOrders[column] = 'asc';
-    } else {
-      this.sortOrders[column] = 'desc';
-    }
-
-    const activeSorts = Object.keys(this.sortOptions)
-      .filter((key) => this.sortOptions[key as keyof ITodo])
-      .map((key) => ({
-        key: key as keyof ITodo,
-        order: this.sortOrders[key as keyof ITodo],
-      }));
-
-    this.todoService.sortTodos(activeSorts);
-  }
-
-  applyDeveloperFilter(developer: string): void {
-    if (developer === '') {
-      this.isAllDevelopersSelected = true;
-
-      this.developers.forEach((dev) => {
-        this.selectedDevelopers[dev] = false;
-      });
-
-      this.todoService.fetchTodos().subscribe();
-    } else {
-      const activeDevelopers = this.getActiveDevelopers();
-
-      this.isAllDevelopersSelected = false;
-      this.todoService.filterByDeveloper(activeDevelopers);
-    }
-  }
-
-  getActiveDevelopers(): string[] {
-    return this.developers.filter((dev) => this.selectedDevelopers[dev]);
   }
 
   getFormattedDevelopers(developers: string[]): string {
