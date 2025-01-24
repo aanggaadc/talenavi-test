@@ -3,6 +3,25 @@
   font-family: 'Roboto', sans-serif;
 }
 
+.table-container {
+  width: 100%;
+  padding: 20px 0;
+  overflow-x: auto;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-new-task {
+  background: gray;
+  border-radius: 5px;
+  background: #0073E6
+}
+
 table {
   width: 100%;
   border-collapse: separate;
@@ -21,7 +40,6 @@ table {
   }
 
   th {
-    background-color: #1b1d2b;
     font-weight: bold;
   }
 

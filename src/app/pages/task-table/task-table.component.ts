@@ -9,6 +9,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 
 import { TodoService, ITodo } from '@/services/todos.service';
 
@@ -28,6 +29,7 @@ interface Todo extends ITodo {
     MatCheckboxModule,
     MatSelectModule,
     MatInputModule,
+    MatIconModule,
   ],
   templateUrl: './task-table.component.html',
   styleUrls: ['./task-table.component.scss'],
