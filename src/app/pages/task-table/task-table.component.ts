@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -193,20 +192,17 @@ export class TaskTableComponent implements OnInit {
 
   applyDeveloperFilter(developer: string): void {
     if (developer === '') {
-      // Jika "All Developers" dipilih
       this.isAllDevelopersSelected = true;
-      // Uncheck semua developer
+
       this.developers.forEach((dev) => {
         this.selectedDevelopers[dev] = false;
       });
-      // Tampilkan semua data
+
       this.todoService.fetchTodos().subscribe();
     } else {
-      // Jika developer tertentu di-check/uncheck
-      this.isAllDevelopersSelected = false;
-      // Dapatkan daftar developer yang aktif
       const activeDevelopers = this.getActiveDevelopers();
-      // Kirim daftar developer yang aktif ke TodoService
+
+      this.isAllDevelopersSelected = false;
       this.todoService.filterByDeveloper(activeDevelopers);
     }
   }

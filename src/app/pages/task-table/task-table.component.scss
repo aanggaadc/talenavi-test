@@ -18,7 +18,7 @@
 
 .btn-new-task {
   border-radius: 5px;
-  background: #0073E6
+  background-color: #0073E6 !important;
 }
 
 table {
@@ -191,4 +191,86 @@ table {
     font-weight: bold;
     text-align: right;
   }
+}
+
+.color-plate-container {
+  display: flex;
+  align-items: center;
+}
+
+.color-plate {
+  width: 30px;
+  height: 20px;
+
+  &.ready {
+    background-color: #3498db;
+    color: #fff;
+  }
+
+  &.progress {
+    background-color: #f1c40f;
+    color: #202235;
+  }
+
+  &.waiting {
+    background-color: #95a5a6;
+    color: #fff;
+  }
+
+  &.pending {
+    background-color: #e67e22;
+    color: #fff;
+  }
+
+  &.done {
+    background-color: #2ecc71;
+    color: #fff;
+  }
+
+  &.stuck {
+    background-color: #e74c3c;
+    color: #fff;
+  }
+
+  &.feature-enhancements {
+    background-color: #3498db;
+    color: #fff;
+  }
+
+  &.other {
+    background-color: #8e44ad;
+    color: #fff;
+  }
+
+  &.bug {
+    background-color: #b83223;
+    ;
+    color: #fff;
+  }
+
+  &.critical {
+    background-color: #e74c3c;
+    color: #fff;
+  }
+
+  &.high {
+    background-color: #e67e22;
+    color: #fff;
+  }
+
+  &.medium {
+    background-color: #f1c40f;
+    color: #202235;
+  }
+
+  &.low {
+    background-color: #2ecc71;
+    color: #fff;
+  }
+
+  &.best-effort {
+    background-color: #3498db;
+    color: #fff;
+  }
+
 }

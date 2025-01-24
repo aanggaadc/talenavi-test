@@ -47,6 +47,7 @@
           [checked]="selection.isSelected(row)">
         </mat-checkbox>
       </td>
+      <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
 
     <!-- Task Column -->
@@ -56,6 +57,7 @@
         <input *ngIf="element.isEditMode" matInput [(ngModel)]="element.title" placeholder="Enter Task" />
         <span *ngIf="!element.isEditMode">{{ element.title }}</span>
       </td>
+      <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
 
     <!-- Developer Column -->
@@ -71,6 +73,7 @@
 
         <span *ngIf="!element.isEditMode">{{ element.developer }}</span>
       </td>
+      <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
 
     <!-- Priority Column -->
@@ -86,6 +89,11 @@
         <span *ngIf="!row.isEditMode" class="priority-badge" [ngClass]="getPriorityClass(row.priority)">
           {{ row.priority }}
         </span>
+      </td>
+      <td mat-footer-cell *matFooterCellDef>
+        <div class="color-plate-container">
+          <div *ngFor="let item of priorityOptions" class="color-plate" [ngClass]="getPriorityClass(item)"></div>
+        </div>
       </td>
     </ng-container>
 
@@ -103,6 +111,11 @@
           {{ row.status }}
         </span>
       </td>
+      <td mat-footer-cell *matFooterCellDef>
+        <div class="color-plate-container">
+          <div *ngFor="let item of statusOptions" class="color-plate" [ngClass]="getStatusClass(item)"></div>
+        </div>
+      </td>
     </ng-container>
 
     <!-- Type Column -->
@@ -118,6 +131,11 @@
           {{ row.type }}
         </span>
       </td>
+      <td mat-footer-cell *matFooterCellDef>
+        <div class="color-plate-container">
+          <div *ngFor="let item of typeOptions" class="color-plate" [ngClass]="getTypeClass(item)"></div>
+        </div>
+      </td>
     </ng-container>
 
     <!-- Estimated SP Column -->
@@ -127,6 +145,7 @@
         <input *ngIf="element.isEditMode" type="number" [(ngModel)]="element['Estimated SP']" />
         <span *ngIf="!element.isEditMode">{{ element["Estimated SP"] }}</span>
       </td>
+      <td mat-footer-cell *matFooterCellDef>1.5 SP</td>
     </ng-container>
 
     <!-- Actual SP Column -->
@@ -136,6 +155,7 @@
         <input *ngIf="element.isEditMode" type="number" [(ngModel)]="element['Actual SP']" />
         <span *ngIf="!element.isEditMode">{{ element["Actual SP"] }}</span>
       </td>
+      <td mat-footer-cell *matFooterCellDef>1.5 SP</td>
     </ng-container>
 
     <!-- Actions Column -->
@@ -149,9 +169,11 @@
           Save
         </button>
       </td>
+      <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
   </table>
 </div>
