@@ -10,6 +10,8 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenu } from '@angular/material/menu';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 import { TodoService, ITodo } from '@/services/todos.service';
 
@@ -30,6 +32,8 @@ interface Todo extends ITodo {
     MatSelectModule,
     MatInputModule,
     MatIconModule,
+    MatMenu,
+    MatMenuTrigger,
   ],
   templateUrl: './task-table.component.html',
   styleUrls: ['./task-table.component.scss'],
@@ -51,6 +55,9 @@ export class TaskTableComponent implements OnInit {
   selection = new SelectionModel<Todo>(true, []);
 
   developers = ['Alice', 'Bob', 'Charlie'];
+  selectedDevelopers: { [key: string]: boolean } = {};
+  isAllDevelopersSelected = true;
+
   priorityOptions: string[] = [
     'Critical',
     'High',
@@ -67,6 +74,16 @@ export class TaskTableComponent implements OnInit {
     'Stuck',
   ];
   typeOptions: string[] = ['Feature Enhancements', 'Other', 'Bug'];
+
+  sortOptions: { [key: string]: boolean } = {
+    title: false,
+    priority: false,
+  };
+
+  sortOrders: { [key: string]: 'asc' | 'desc' } = {
+    title: 'asc',
+    priority: 'asc',
+  };
 
   private destroy$ = new Subject<void>();
 
@@ -155,21 +172,63 @@ export class TaskTableComponent implements OnInit {
     }
   }
 
-  splitString(str: string): string[] {
-    return str.split(' ');
+  updateSort(column: keyof ITodo, isChecked: boolean): void {
+    this.sortOptions[column] = isChecked;
+
+    if (isChecked) {
+      this.sortOrders[column] = 'asc';
+    } else {
+      this.sortOrders[column] = 'desc';
+    }
+
+    const activeSorts = Object.keys(this.sortOptions)
+      .filter((key) => this.sortOptions[key as keyof ITodo])
+      .map((key) => ({
+        key: key as keyof ITodo,
+        order: this.sortOrders[key as keyof ITodo],
+      }));
+
+    this.todoService.sortTodos(activeSorts);
+  }
+
+  applyDeveloperFilter(developer: string): void {
+    if (developer === '') {
+      // Jika "All Developers" dipilih
+      this.isAllDevelopersSelected = true;
+      // Uncheck semua developer
+      this.developers.forEach((dev) => {
+        this.selectedDevelopers[dev] = false;
+      });
+      // Tampilkan semua data
+      this.todoService.fetchTodos().subscribe();
+    } else {
+      // Jika developer tertentu di-check/uncheck
+      this.isAllDevelopersSelected = false;
+      // Dapatkan daftar developer yang aktif
+      const activeDevelopers = this.getActiveDevelopers();
+      // Kirim daftar developer yang aktif ke TodoService
+      this.todoService.filterByDeveloper(activeDevelopers);
+    }
+  }
+
+  getActiveDevelopers(): string[] {
+    return this.developers.filter((dev) => this.selectedDevelopers[dev]);
   }
 
   getFormattedDevelopers(developers: string[]): string {
     return developers?.join(', ') + ' ';
   }
 
-  editRow(row: Todo) {
+  createTodo(): void {
+    this.todoService.addTodo();
+  }
+
+  editTodo(row: Todo): void {
     row.isEditMode = true;
   }
 
-  saveRow(row: Todo) {
+  saveTodo(row: Todo): void {
     row.isEditMode = false;
-    console.log(row);
     this.todoService.updateTodo(row);
   }
 
