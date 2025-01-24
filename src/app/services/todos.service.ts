@@ -74,12 +74,10 @@ export class TodoService {
         let valueA = a[key];
         let valueB = b[key];
 
-        // Handle comparison for numbers and strings
         if (typeof valueA === 'number' && typeof valueB === 'number') {
           if (valueA < valueB) return order === 'asc' ? -1 : 1;
           if (valueA > valueB) return order === 'asc' ? 1 : -1;
         } else {
-          // Convert to string and lowercase for case-insensitive comparison
           valueA = valueA.toString().toLowerCase();
           valueB = valueB.toString().toLowerCase();
 
@@ -107,5 +105,13 @@ export class TodoService {
     } else {
       this.todosSubject.next([...this.originalTodos]);
     }
+  }
+
+  searchByTitle(title: string): void {
+    const currentTodos = this.todosSubject.getValue();
+    const filteredTodos = currentTodos.filter((todo) =>
+      todo.title.toLowerCase().includes(title.toLowerCase())
+    );
+    this.todosSubject.next(filteredTodos);
   }
 }
