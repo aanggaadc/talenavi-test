@@ -82,8 +82,8 @@ export class TodoService {
       0
     );
 
-    this.totalEstimatedSP$.next(totalEstimatedSP); // Update total Estimated SP
-    this.totalActualSP$.next(totalActualSP); // Update total Actual SP
+    this.totalEstimatedSP$.next(totalEstimatedSP);
+    this.totalActualSP$.next(totalActualSP);
   }
 
   sortTodos(sortParams: { key: keyof ITodo; order: 'asc' | 'desc' }[]): void {

@@ -56,24 +56,28 @@
           [checked]="selection.isSelected(row)">
         </mat-checkbox>
       </td>
-      <td mat-footer-cell *matFooterCellDef></td>
+      <td mat-footer-cell *matFooterCellDef style="background-color: #141932;"></td>
     </ng-container>
 
     <!-- Task Column -->
     <ng-container matColumnDef="title">
       <th mat-header-cell *matHeaderCellDef>Task</th>
       <td mat-cell *matCellDef="let element">
-        <input *ngIf="element.isEditMode" matInput [(ngModel)]="element.title" placeholder="Enter Task" />
+        <mat-form-field *ngIf="element.isEditMode" appearance="fill">
+          <mat-label>Enter task name</mat-label>
+          <input matInput [(ngModel)]="element.title" />
+        </mat-form-field>
+
         <span *ngIf="!element.isEditMode">{{ element.title }}</span>
       </td>
-      <td mat-footer-cell *matFooterCellDef></td>
+      <td mat-footer-cell *matFooterCellDef style="background-color: #141932;"></td>
     </ng-container>
 
     <!-- Developer Column -->
     <ng-container matColumnDef="developer">
       <th mat-header-cell *matHeaderCellDef>Developer</th>
       <td mat-cell *matCellDef="let element">
-        <mat-select *ngIf="element.isEditMode" [(ngModel)]="element.developers"
+        <mat-select *ngIf="element.isEditMode" [(ngModel)]="element.developers" style="min-width: 120px;"
           (ngModelChange)="updateDeveloper(element, $event)" multiple placeholder="Select Developer">
           <mat-option *ngFor="let dev of developers" [value]="dev">
             {{ dev }}
@@ -82,7 +86,7 @@
 
         <span *ngIf="!element.isEditMode">{{ element.developer }}</span>
       </td>
-      <td mat-footer-cell *matFooterCellDef></td>
+      <td mat-footer-cell *matFooterCellDef style="background-color: #141932;"></td>
     </ng-container>
 
     <!-- Priority Column -->
@@ -131,7 +135,7 @@
     <ng-container matColumnDef="type">
       <th mat-header-cell *matHeaderCellDef>Type</th>
       <td mat-cell *matCellDef="let row">
-        <mat-select *ngIf="row.isEditMode" [(ngModel)]="row.type">
+        <mat-select *ngIf="row.isEditMode" [(ngModel)]="row.type" style="min-width: 170px;">
           <mat-option *ngFor="let option of typeOptions" [value]="option" [ngClass]="getTypeClass(option)">
             {{ option }}
           </mat-option>
@@ -151,7 +155,11 @@
     <ng-container matColumnDef="Estimated SP">
       <th mat-header-cell *matHeaderCellDef>Estimated SP</th>
       <td mat-cell *matCellDef="let element" style="text-align: center;">
-        <input *ngIf="element.isEditMode" type="number" [(ngModel)]="element['Estimated SP']" />
+        <mat-form-field *ngIf="element.isEditMode" appearance="fill" class="sp-input">
+          <input matInput *ngIf="element.isEditMode" type="number" [(ngModel)]="element['Estimated SP']"
+            class="sp-input" />
+        </mat-form-field>
+
         <span *ngIf="!element.isEditMode">{{ element["Estimated SP"] }}</span>
       </td>
       <td mat-footer-cell *matFooterCellDef>
@@ -163,7 +171,11 @@
     <ng-container matColumnDef="Actual SP">
       <th mat-header-cell *matHeaderCellDef>Actual SP</th>
       <td mat-cell *matCellDef="let element" style="text-align: center;">
-        <input *ngIf="element.isEditMode" type="number" [(ngModel)]="element['Actual SP']" />
+        <mat-form-field *ngIf="element.isEditMode" appearance="fill" class="sp-input">
+          <input matInput *ngIf="element.isEditMode" type="number" [(ngModel)]="element['Actual SP']"
+            class="sp-input" />
+        </mat-form-field>
+
         <span *ngIf="!element.isEditMode">{{ element["Actual SP"] }}</span>
       </td>
       <td mat-footer-cell *matFooterCellDef>

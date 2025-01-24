@@ -294,3 +294,95 @@ table {
     font-size: 10px;
   }
 }
+
+.sp-input {
+  width: 40px;
+}
+
+::ng-deep .mat-mdc-select-panel {
+  background-color: #202235 !important;
+  color: #FFF;
+  padding: 0 !important;
+}
+
+::ng-deep .mat-mdc-menu-panel {
+  background-color: #202235 !important;
+  color: #FFF;
+  padding: 0 10px;
+  border-radius: 10px;
+}
+
+::ng-deep .mat-mdc-option {
+  padding-inline: 20px;
+
+  &.ready {
+    background-color: #3498db !important;
+    color: #fff;
+  }
+
+  &.progress {
+    background-color: #f1c40f !important;
+    color: #202235;
+  }
+
+  &.waiting {
+    background-color: #95a5a6 !important;
+    color: #fff;
+  }
+
+  &.pending {
+    background-color: #e67e22 !important;
+    color: #fff;
+  }
+
+  &.done {
+    background-color: #2ecc71 !important;
+    color: #fff;
+  }
+
+  &.stuck {
+    background-color: #e74c3c !important;
+    color: #fff;
+  }
+
+  &.feature-enhancements {
+    background-color: #3498db !important;
+    color: #fff;
+  }
+
+  &.other {
+    background-color: #8e44ad !important;
+    color: #fff;
+  }
+
+  &.bug {
+    background-color: #b83223 !important;
+    ;
+    color: #fff;
+  }
+
+  &.critical {
+    background-color: #e74c3c !important;
+    color: #fff;
+  }
+
+  &.high {
+    background-color: #e67e22 !important;
+    color: #fff;
+  }
+
+  &.medium {
+    background-color: #f1c40f !important;
+    color: #202235;
+  }
+
+  &.low {
+    background-color: #2ecc71 !important;
+    color: #fff;
+  }
+
+  &.best-effort {
+    background-color: #3498db !important;
+    color: #fff;
+  }
+}
