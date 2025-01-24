@@ -26,7 +26,10 @@ export class TodoService {
 
   private todosSubject = new BehaviorSubject<ITodo[]>([]);
   private originalTodos: ITodo[] = [];
+
   todos$ = this.todosSubject.asObservable();
+  totalEstimatedSP$ = new BehaviorSubject<number>(0);
+  totalActualSP$ = new BehaviorSubject<number>(0);
 
   constructor(private http: HttpClient) {}
 
@@ -36,6 +39,7 @@ export class TodoService {
         if (response.response) {
           this.originalTodos = response.data;
           this.todosSubject.next(response.data);
+          this.calculateTotals();
         }
       })
     );
@@ -54,6 +58,7 @@ export class TodoService {
 
     this.originalTodos = [newTodo, ...this.originalTodos];
     this.todosSubject.next([...this.originalTodos]);
+    this.calculateTotals();
   }
 
   updateTodo(updatedTodo: ITodo): void {
@@ -62,6 +67,23 @@ export class TodoService {
       todo.title === updatedTodo.title ? updatedTodo : todo
     );
     this.todosSubject.next(updatedTodos);
+    this.calculateTotals();
+  }
+
+  private calculateTotals(): void {
+    const todos = this.todosSubject.getValue();
+
+    const totalEstimatedSP = todos.reduce(
+      (acc, todo) => acc + todo['Estimated SP'],
+      0
+    );
+    const totalActualSP = todos.reduce(
+      (acc, todo) => acc + todo['Actual SP'],
+      0
+    );
+
+    this.totalEstimatedSP$.next(totalEstimatedSP); // Update total Estimated SP
+    this.totalActualSP$.next(totalActualSP); // Update total Actual SP
   }
 
   sortTodos(sortParams: { key: keyof ITodo; order: 'asc' | 'desc' }[]): void {

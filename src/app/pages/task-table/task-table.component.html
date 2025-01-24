@@ -141,21 +141,25 @@
     <!-- Estimated SP Column -->
     <ng-container matColumnDef="Estimated SP">
       <th mat-header-cell *matHeaderCellDef>Estimated SP</th>
-      <td mat-cell *matCellDef="let element">
+      <td mat-cell *matCellDef="let element" style="text-align: center;">
         <input *ngIf="element.isEditMode" type="number" [(ngModel)]="element['Estimated SP']" />
         <span *ngIf="!element.isEditMode">{{ element["Estimated SP"] }}</span>
       </td>
-      <td mat-footer-cell *matFooterCellDef>1.5 SP</td>
+      <td mat-footer-cell *matFooterCellDef>
+        <p class="total-sp-text">{{totalEstimatedSP}}SP <br /> <span>sum</span></p>
+      </td>
     </ng-container>
 
     <!-- Actual SP Column -->
     <ng-container matColumnDef="Actual SP">
       <th mat-header-cell *matHeaderCellDef>Actual SP</th>
-      <td mat-cell *matCellDef="let element">
+      <td mat-cell *matCellDef="let element" style="text-align: center;">
         <input *ngIf="element.isEditMode" type="number" [(ngModel)]="element['Actual SP']" />
         <span *ngIf="!element.isEditMode">{{ element["Actual SP"] }}</span>
       </td>
-      <td mat-footer-cell *matFooterCellDef>1.5 SP</td>
+      <td mat-footer-cell *matFooterCellDef>
+        <p class="total-sp-text">{{totalActualSP}} SP <br /> <span>sum</span></p>
+      </td>
     </ng-container>
 
     <!-- Actions Column -->

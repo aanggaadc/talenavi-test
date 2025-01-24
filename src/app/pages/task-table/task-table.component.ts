@@ -84,6 +84,9 @@ export class TaskTableComponent implements OnInit {
     priority: 'asc',
   };
 
+  totalEstimatedSP: number = 0;
+  totalActualSP: number = 0;
+
   private destroy$ = new Subject<void>();
 
   constructor(private todoService: TodoService) {}
@@ -100,6 +103,18 @@ export class TaskTableComponent implements OnInit {
         console.error('Error fetching data:', err);
       },
     });
+
+    this.todoService.totalEstimatedSP$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((total) => {
+        this.totalEstimatedSP = total;
+      });
+
+    this.todoService.totalActualSP$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((total) => {
+        this.totalActualSP = total;
+      });
 
     this.todoService.fetchTodos().subscribe();
   }
