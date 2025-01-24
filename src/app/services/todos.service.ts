@@ -45,7 +45,7 @@ export class TodoService {
     );
   }
 
-  addTodo(): void {
+  addTodo(todo?: ITodo): void {
     const newTodo: ITodo = {
       title: 'New Task',
       developer: '',
@@ -56,7 +56,9 @@ export class TodoService {
       'Actual SP': 0,
     };
 
-    this.originalTodos = [newTodo, ...this.originalTodos];
+    const payload = todo ?? newTodo;
+
+    this.originalTodos = [payload, ...this.originalTodos];
     this.todosSubject.next([...this.originalTodos]);
     this.calculateTotals();
   }

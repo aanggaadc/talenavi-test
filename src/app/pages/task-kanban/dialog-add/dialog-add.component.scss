@@ -1,0 +1,29 @@
+mat-dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+mat-form-field {
+  width: 100%;
+  color: #fff !important;
+}
+
+.mat-mdc-dialog-title {
+  color: #fff !important;
+}
+
+.mat-mdc-dialog-surface {
+  background: #202235 !important;
+  border-radius: 10px;
+}
+
+.btn-save {
+  background-color: #0073E6;
+  border-radius: 5px;
+}
+
+.btn-cancel {
+  background-color: #3e4047;
+  border-radius: 5px;
+}

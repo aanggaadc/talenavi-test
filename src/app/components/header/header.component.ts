@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -8,6 +9,9 @@ import { MatCheckboxModule, MatCheckbox } from '@angular/material/checkbox';
 import { MatMenu } from '@angular/material/menu';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
+import { MatDialog } from '@angular/material/dialog';
+
+import { DialogAddComponent } from '@/pages/task-kanban/dialog-add/dialog-add.component';
 
 import { TodoService, ITodo } from '@/services/todos.service';
 
@@ -46,10 +50,31 @@ export class HeaderComponent {
     priority: 'asc',
   };
 
-  constructor(private todoService: TodoService) {}
+  constructor(
+    private todoService: TodoService,
+    private dialog: MatDialog,
+    private router: Router
+  ) {}
 
   createTodo(): void {
-    this.todoService.addTodo();
+    const currentUrl = this.router.url;
+
+    if (currentUrl === '/kanban') this.openTodoDialog();
+    else this.todoService.addTodo();
+  }
+
+  openTodoDialog(): void {
+    const dialogRef = this.dialog.open(DialogAddComponent, {
+      width: '500px',
+      data: null,
+      panelClass: 'custom-dialog-container',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.todoService.addTodo(result);
+      }
+    });
   }
 
   searchTaskName(): void {

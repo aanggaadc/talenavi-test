@@ -1,0 +1,66 @@
+<h2 mat-dialog-title>{{ data ? 'Edit Todo' : 'Create Todo' }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="todoForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Developer</mat-label>
+      <mat-select formControlName="developer" multiple required>
+        <mat-option value="Alice">Alice</mat-option>
+        <mat-option value="Bob">Bob</mat-option>
+        <mat-option value="Charlie">Charlie</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Priority</mat-label>
+      <mat-select formControlName="priority" class="select">
+        <mat-option value="Low">Low</mat-option>
+        <mat-option value="Medium">Medium</mat-option>
+        <mat-option value="High">High</mat-option>
+        <mat-option value="Critical">Critical</mat-option>
+        <mat-option value="Best Effort">Best Effort</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value="Ready to start">Ready to start</mat-option>
+        <mat-option value="In Progress">In Progress</mat-option>
+        <mat-option value="Waiting for review">Waiting for review</mat-option>
+        <mat-option value="Pending Deploy">Pending Deploy</mat-option>
+        <mat-option value="Stuck">Stuck</mat-option>
+        <mat-option value="Done">Done</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Type</mat-label>
+      <mat-select formControlName="type">
+        <mat-option value="Feature Enhancements">Feature Enhancements</mat-option>
+        <mat-option value="Bug">Bug</mat-option>
+        <mat-option value="Other">Other</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Estimated SP</mat-label>
+      <input matInput type="number" formControlName="estimatedSP" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Actual SP</mat-label>
+      <input matInput type="number" formControlName="actualSP" required />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button class="btn-cancel" mat-button (click)="onCancel()">Cancel</button>
+  <button class="btn-save" mat-button color="primary" (click)="onSave()" [disabled]="todoForm.invalid">
+    Save
+  </button>
+</mat-dialog-actions>
