@@ -134,6 +134,11 @@ export class TodoService {
     const filteredTodos = currentTodos.filter((todo) =>
       todo.title.toLowerCase().includes(title.toLowerCase())
     );
-    this.todosSubject.next(filteredTodos);
+
+    if (!title) {
+      this.todosSubject.next([...this.originalTodos]);
+    } else {
+      this.todosSubject.next(filteredTodos);
+    }
   }
 }

@@ -74,6 +74,8 @@ export class TaskTableComponent implements OnInit {
   ];
   typeOptions: string[] = ['Feature Enhancements', 'Other', 'Bug'];
 
+  taskName: string = '';
+
   sortOptions: { [key: string]: boolean } = {
     title: false,
     priority: false,
@@ -186,6 +188,23 @@ export class TaskTableComponent implements OnInit {
     }
   }
 
+  createTodo(): void {
+    this.todoService.addTodo();
+  }
+
+  editTodo(row: Todo): void {
+    row.isEditMode = true;
+  }
+
+  saveTodo(row: Todo): void {
+    row.isEditMode = false;
+    this.todoService.updateTodo(row);
+  }
+
+  searchTaskName(): void {
+    this.todoService.searchByTitle(this.taskName);
+  }
+
   updateSort(column: keyof ITodo, isChecked: boolean): void {
     this.sortOptions[column] = isChecked;
 
@@ -228,19 +247,6 @@ export class TaskTableComponent implements OnInit {
 
   getFormattedDevelopers(developers: string[]): string {
     return developers?.join(', ') + ' ';
-  }
-
-  createTodo(): void {
-    this.todoService.addTodo();
-  }
-
-  editTodo(row: Todo): void {
-    row.isEditMode = true;
-  }
-
-  saveTodo(row: Todo): void {
-    row.isEditMode = false;
-    this.todoService.updateTodo(row);
   }
 
   isAllSelected(): boolean {

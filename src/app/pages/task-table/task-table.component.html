@@ -1,9 +1,18 @@
 <div class="header">
   <button mat-flat-button class="btn-new-task" (click)="createTodo()">New task</button>
-  <button mat-fab extended>
-    <mat-icon>search</mat-icon>
-    Search
-  </button>
+  <div class="search-container">
+    <!-- Search Input -->
+    <mat-form-field appearance="fill" class="search-input">
+      <mat-label>Enter task name</mat-label>
+      <input matInput [(ngModel)]="taskName">
+    </mat-form-field>
+
+    <!-- Search Button -->
+    <button mat-fab extended class="search-button" (click)="searchTaskName()">
+      <mat-icon>search</mat-icon>
+      Search
+    </button>
+  </div>
 
   <button mat-fab extended [matMenuTriggerFor]="developerMenu">
     <mat-icon>person</mat-icon>
