@@ -142,11 +142,11 @@
     <!-- Actions Column -->
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>Actions</th>
-      <td mat-cell *matCellDef="let element">
+      <td mat-cell *matCellDef="let element; let i = index ">
         <button *ngIf="!element.isEditMode" mat-button (click)="editTodo(element)">
           Edit
         </button>
-        <button *ngIf="element.isEditMode" mat-button (click)="saveTodo(element)">
+        <button *ngIf="element.isEditMode" mat-button (click)="saveTodo(element, i)">
           Save
         </button>
       </td>

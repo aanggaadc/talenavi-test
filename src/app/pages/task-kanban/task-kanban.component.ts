@@ -80,7 +80,7 @@ export class TaskKanbanComponent {
           break;
       }
 
-      this.todoService.updateTodo(movedTodo);
+      this.todoService.moveTodo(movedTodo);
     }
   }
 }

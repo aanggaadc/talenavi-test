@@ -63,7 +63,24 @@ export class TodoService {
     this.calculateTotals();
   }
 
-  updateTodo(updatedTodo: ITodo): void {
+  updateTodo(updatedTodo: ITodo, index: number): void {
+    const currentTodos = this.todosSubject.getValue();
+
+    if (index >= 0 && index < currentTodos.length) {
+      const updatedTodos = [...currentTodos];
+      const updatedOriginalTodos = [...this.originalTodos];
+
+      updatedTodos[index] = updatedTodo;
+      updatedOriginalTodos[index] = updatedTodo;
+      this.todosSubject.next(updatedTodos);
+      this.originalTodos = updatedOriginalTodos;
+      this.calculateTotals();
+    } else {
+      console.error('Invalid index:', index);
+    }
+  }
+
+  moveTodo(updatedTodo: ITodo): void {
     const currentTodos = this.todosSubject.getValue();
     const updatedTodos = currentTodos.map((todo) =>
       todo.title === updatedTodo.title ? updatedTodo : todo

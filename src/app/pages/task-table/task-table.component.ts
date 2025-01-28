@@ -179,9 +179,9 @@ export class TaskTableComponent implements OnInit {
     row.isEditMode = true;
   }
 
-  saveTodo(row: Todo): void {
+  saveTodo(row: Todo, index: number): void {
     row.isEditMode = false;
-    this.todoService.updateTodo(row);
+    this.todoService.updateTodo(row, index);
   }
 
   getFormattedDevelopers(developers: string[]): string {
