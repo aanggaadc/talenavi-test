@@ -40,8 +40,8 @@ export class DialogAddComponent {
       priority: ['Low', Validators.required],
       status: ['Ready to start', Validators.required],
       type: ['Other', Validators.required],
-      estimatedSP: [0, [Validators.required, Validators.min(0)]],
-      actualSP: [0, [Validators.required, Validators.min(0)]],
+      'Estimated SP': [0, [Validators.required, Validators.min(0)]],
+      'Actual SP': [0, [Validators.required, Validators.min(0)]],
     });
 
     if (data) {
